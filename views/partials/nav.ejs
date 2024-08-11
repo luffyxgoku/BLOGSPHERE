@@ -1,0 +1,132 @@
+<nav class="navbar navbar-expand-lg sticky-top" data-bs-theme="dark">
+  <style>
+    .sticky-top {
+      position: -webkit-sticky; /* For Safari */
+      position: sticky;
+      top: 0; /* Stick to the top */
+      z-index: 1020; /* Ensure it stays above other content */
+    }
+    .navbar {
+      background-color: #000000; /* Black background */
+    }
+    .navbar-brand,
+    .navbar-nav .nav-link,
+    .dropdown-toggle,
+    .dropdown-menu .dropdown-item {
+      color: #ffffff; /* White text color */
+      font-weight: normal; /* Same font weight */
+      font-size: 1.1rem; /* Same font size */
+      text-decoration: none; /* Remove underline */
+    }
+    .navbar-nav .nav-link:hover,
+    .dropdown-toggle:hover,
+    .dropdown-menu .dropdown-item:hover {
+      color: rgb(128, 162, 236); /* Text color on hover */
+    }
+    .nav-link.active {
+      color: rgb(
+        128,
+        162,
+        236
+      ); /* Ensure active link color is the same as hover color */
+    }
+    .navbar-toggler-icon {
+      background-image: none; /* Ensure the default icon doesn't interfere */
+    }
+    .navbar-collapse {
+      display: flex;
+      justify-content: center;
+    }
+    .navbar-nav {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 0; /* Reset margin */
+    }
+    .navbar-nav .nav-item {
+      margin: 0 10px; /* Add space between items */
+    }
+    .ms-auto {
+      margin-left: auto; /* Push right-aligned content to the right */
+    }
+    .navbar-toggler {
+      border: none;
+      background-color: transparent;
+    }
+    .navbar-toggler-icon {
+      background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3E%3Cpath stroke='%23ffffff' stroke-width='2' d='M5 7h20M5 15h20M5 23h20'/%3E%3C/svg%3E");
+    }
+    .navbar-logo {
+      width: 30px; /* Adjust the width as needed */
+      height: 30px; /* Adjust the height as needed */
+      margin-right: 10px; /* Space between the logo and the next element */
+      filter: invert(100%); /* Invert the logo color to white */
+    }
+    @media (max-width: 992px) {
+      /* Adjust breakpoint if needed */
+      .navbar-collapse {
+        text-align: center;
+      }
+      .navbar-nav {
+        margin: 0;
+        flex-direction: column; /* Stack items vertically */
+      }
+    }
+  </style>
+  <div class="container-fluid">
+    <!-- Remove the link around the logo -->
+    <img
+      src="https://cdn-icons-png.flaticon.com/512/60/60736.png"
+      alt="logo"
+      class="navbar-logo"
+    />
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNavDropdown"
+      aria-controls="navbarNavDropdown"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">Home</a>
+        </li>
+        <% if (locals.user) { %>
+        <li class="nav-item">
+          <a class="nav-link" href="/blog/add-new">Add Blog</a>
+        </li>
+        <% } %>
+      </ul>
+      <ul class="navbar-nav ms-auto">
+        <% if (locals.user) { %>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Sami
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" href="/user/logout">Logout</a></li>
+          </ul>
+        </li>
+        <% } else { %>
+        <li class="nav-item">
+          <a class="nav-link" href="/user/signup">Create Account</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/user/signin">Signin</a>
+        </li>
+        <% } %>
+      </ul>
+    </div>
+  </div>
+</nav>
