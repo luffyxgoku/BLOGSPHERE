@@ -18,11 +18,7 @@ const app = express();
 const PORT = process.env.PORT || 8000;
 
 mongoose
-  .connect(process.env.MONGO_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    serverSelectionTimeoutMS: 50000, // Increase the timeout to 50 seconds
-  })
+  .connect(process.env.MONGO_URL)
   .then((e) => console.log("MongoDB Connected!"));
 
 app.set("view engine", "ejs");
