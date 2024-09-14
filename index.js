@@ -1,3 +1,5 @@
+// updated the env file and pushed the code on github to host the app live!
+
 require("dotenv").config();
 
 const path = require("path");
