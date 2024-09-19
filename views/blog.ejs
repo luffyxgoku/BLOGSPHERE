@@ -80,7 +80,7 @@
     </div>
 
     <div class="container mt-4 blog-content">
-      <img src="<%= blog.coverImageURL %>" />
+      <img src="/blog/image/<%= blog._id %>" alt="Cover Image" />
       <div class="blog-body">
         <p class="mt-4"><%= blog.body %></p>
       </div>
@@ -96,7 +96,7 @@
     <div class="container mt-4 comments-section">
       <h1>Comments (<%= comments.length %>)</h1>
       <% if (locals.user) { %>
-      <form action="/blog/comment/<%= blog._id  %>" method="post">
+      <form action="/blog/comment/<%= blog._id %>" method="post">
         <div class="mb-3">
           <input
             type="text"

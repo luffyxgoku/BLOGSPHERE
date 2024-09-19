@@ -1,22 +1,12 @@
 const { Router } = require("express");
 const multer = require("multer");
-const path = require("path");
-
 const Blog = require("../models/blog");
 const Comment = require("../models/comment");
 
 const router = Router();
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, path.resolve(`./public/uploads/`));
-  },
-  filename: function (req, file, cb) {
-    const fileName = `${Date.now()} - ${file.originalname}`;
-    cb(null, fileName);
-  },
-});
-
+// Use memory storage for multer
+const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 router.get("/add-new", (req, res) => {
@@ -37,6 +27,20 @@ router.get("/:id", async (req, res) => {
   });
 });
 
+router.get("/image/:id", async (req, res) => {
+  try {
+    const blog = await Blog.findById(req.params.id);
+    if (!blog || !blog.coverImage.data) {
+      return res.status(404).send("Image not found");
+    }
+
+    res.set("Content-Type", blog.coverImage.contentType);
+    res.send(blog.coverImage.data);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
 router.post("/comment/:blogId", async (req, res) => {
   await Comment.create({
     content: req.body.content,
@@ -48,12 +52,17 @@ router.post("/comment/:blogId", async (req, res) => {
 
 router.post("/", upload.single("coverImage"), async (req, res) => {
   const { title, body } = req.body;
-  const blog = await Blog.create({
-    body,
+  const blog = new Blog({
     title,
+    body,
     createdBy: req.user._id,
-    coverImageURL: `/uploads/${req.file.filename}`,
+    coverImage: {
+      data: req.file.buffer,
+      contentType: req.file.mimetype,
+    },
   });
+
+  await blog.save();
   return res.redirect(`/blog/${blog._id}`);
 });
 
